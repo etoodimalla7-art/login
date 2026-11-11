@@ -33,6 +33,58 @@ if (registerForm) {
 }
 
 
+// FORGOT PASSWORD FORM
+const forgotForm = document.getElementById("forgotForm");
+
+if (forgotForm) {
+
+    forgotForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const email = document.getElementById("resetEmail").value.trim();
+
+        const newPassword = document.getElementById("newPassword").value;
+
+        const confirmPassword = document.getElementById("confirmNewPassword").value;
+
+        // Get registered user
+        const savedUser = localStorage.getItem("registeredUser");
+
+        if (!savedUser) {
+            alert("No registered account found!");
+            return;
+        }
+
+        const user = JSON.parse(savedUser);
+
+        // Check registered email
+        if (email !== user.email) {
+            alert("This email address is not registered!");
+            return;
+        }
+
+        // Check password confirmation
+        if (newPassword !== confirmPassword) {
+            alert("Passwords do not match!");
+            return;
+        }
+
+        // Update password
+        user.password = newPassword;
+
+        localStorage.setItem("registeredUser", JSON.stringify(user));
+
+        alert("Password successfully reset!");
+
+        // Redirect to login
+        window.location.href = "index.html";
+
+    });
+
+}
+
+
 // LOGIN FORM
 const loginForm = document.getElementById("loginForm");
 
